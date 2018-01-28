@@ -1,2 +1,2 @@
 rootProject.name = 'spring-cloud-core'
-includeFlat 'spring-cloud-client'
+includeFlat 'spring-cloud-client', 'spring-cloud-utils'

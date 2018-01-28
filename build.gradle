@@ -13,7 +13,14 @@ buildscript {
 allprojects {
 	apply plugin: 'java'
 	apply plugin: 'eclipse'
-	apply plugin: 'org.springframework.boot'
+	
+	if (!it.name.endsWith('utils')) {
+		apply plugin: 'org.springframework.boot'
+		
+		dependencies {
+			testCompile('org.springframework.boot:spring-boot-starter-test')
+		}
+	}
 	
 	group = 'com.ibm'
 	version = new Date().format('yyyyMMdd')
@@ -21,10 +28,6 @@ allprojects {
 	
 	repositories {
 		mavenCentral()
-	}
-	
-	dependencies {
-		testCompile('org.springframework.boot:spring-boot-starter-test')
 	}
 }
 
@@ -34,6 +37,7 @@ ext {
 
 dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+	compile project(':spring-cloud-utils')
 }
 
 // https://spring.io/blog/2015/02/23/better-dependency-management-for-gradle
