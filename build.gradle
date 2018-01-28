@@ -18,6 +18,8 @@ allprojects {
 		apply plugin: 'org.springframework.boot'
 		
 		dependencies {
+			compile project(':spring-cloud-utils')
+			
 			testCompile('org.springframework.boot:spring-boot-starter-test')
 		}
 	}
@@ -37,7 +39,6 @@ ext {
 
 dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
-	compile project(':spring-cloud-utils')
 }
 
 // https://spring.io/blog/2015/02/23/better-dependency-management-for-gradle
