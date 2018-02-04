@@ -31,19 +31,19 @@ allprojects {
 	repositories {
 		mavenCentral()
 	}
-}
+	
+	ext {
+		springCloudVersion = 'Edgware.RELEASE'
+	}
 
-ext {
-	springCloudVersion = 'Edgware.RELEASE'
+	// https://spring.io/blog/2015/02/23/better-dependency-management-for-gradle
+	dependencyManagement {
+		imports {
+			mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+		}
+	}
 }
 
 dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
-}
-
-// https://spring.io/blog/2015/02/23/better-dependency-management-for-gradle
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
 }
