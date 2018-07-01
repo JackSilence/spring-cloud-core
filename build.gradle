@@ -7,6 +7,8 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		
+		classpath('se.transmode.gradle:gradle-docker:1.2')
 	}
 }
 
@@ -16,6 +18,13 @@ allprojects {
 	
 	if (!it.name.endsWith('utils')) {
 		apply plugin: 'org.springframework.boot'
+		apply plugin: 'application'
+		apply plugin: 'docker'
+		
+		distDocker {
+			runCommand 'apt-get update'
+			runCommand 'apt-get -y install curl'
+		}
 		
 		dependencies {
 			compile project(':spring-cloud-utils')
