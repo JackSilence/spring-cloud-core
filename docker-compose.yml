@@ -1,0 +1,44 @@
+version: '2.1'
+services:
+  peer1:
+    image: com.ibm/spring-cloud-core:latest
+    ports:
+      - "8761:8761"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=peer1"
+  peer2:
+    image: com.ibm/spring-cloud-core:latest
+    ports:
+      - "8762:8762"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=peer2"
+  config:
+    depends_on:
+      - peer1
+      - peer2
+    image: com.ibm/spring-cloud-config:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8768/info"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    ports:
+      - "8768:8768"
+  api1:
+    depends_on:
+      config:
+        condition: service_healthy
+    image: com.ibm/spring-cloud-api:latest
+    ports:
+      - "8763:8763"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=api1"
+  api2:
+    depends_on:
+      config:
+        condition: service_healthy
+    image: com.ibm/spring-cloud-api:latest
+    ports:
+      - "8764:8764"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=api2"
