@@ -24,6 +24,7 @@ allprojects {
 		distDocker {
 			runCommand 'apt-get update'
 			runCommand 'apt-get -y install curl'
+			tagVersion = 'latest'
 		}
 		
 		dependencies {
